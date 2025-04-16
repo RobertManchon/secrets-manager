@@ -1,6 +1,4 @@
-Voici un fichier `.gitignore` bien adapté à ton projet de gestionnaire de secrets basé sur Go et Flutter :
 
-```
 # Fichier .gitignore pour projet secrets-manager
 
 # Variables d'environnement et configuration
@@ -113,17 +111,8 @@ Thumbs.db
 # Fichiers de rétrospective
 *.bak
 .bak/
-```
 
-Ce fichier `.gitignore` couvre :
-- Les variables d'environnement et fichiers de configuration contenant des secrets
-- Les fichiers de certificats et clés privées
-- Les binaires et objets compilés Go
-- Les dépendances et fichiers générés Flutter/Dart
-- Les logs et données MySQL
-- Les volumes Docker et données persistantes
-- Les fichiers temporaires des systèmes d'exploitation
-- Les fichiers de configuration d'IDE
-- Les documents sensibles et sauvegardes
-
-N'hésite pas à l'ajuster selon tes besoins spécifiques! 🔐
+/docs 
+/scripts
+/README.md
+/docs/README.md
