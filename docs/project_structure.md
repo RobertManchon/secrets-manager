@@ -1,0 +1,35 @@
+# Project Structure
+
+```
+secrets-manager/
+    go.mod
+    go.sum
+    cmd/
+        api/
+            main.go
+    docker/
+    docs/
+        project_structure.md
+    internal/
+        api/
+            routes.go
+            handlers/
+                secrets.go
+            middleware/
+        auth/
+        config/
+        models/
+            models.go
+            secret.go
+        storage/
+            repository.go
+            mysql/
+        vault/
+            client.go
+            service.go
+            token_manager.go
+    pkg/
+        logger/
+        utils/
+    scripts/
+        arbo.py```
