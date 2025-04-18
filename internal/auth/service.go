@@ -4,7 +4,6 @@ package auth
 
 import (
 	"database/sql"
-	"errors"
 	"fmt"
 	"time"
 
@@ -13,9 +12,9 @@ import (
 )
 
 var (
-	ErrInvalidCredentials = errors.New("identifiants invalides")
-	ErrUserExists         = errors.New("l'utilisateur existe déjà")
-	ErrInvalidToken       = errors.New("token invalide")
+	// ErrInvalidCredentials is declared in service_improved.go
+	// ErrUserExists is declared in service_improved.go
+	// ErrInvalidToken is declared in service_improved.go
 )
 
 // Service fournit des fonctionnalités d'authentification
@@ -35,16 +34,9 @@ func NewService(db *sql.DB, jwtSecret string, jwtExpiry time.Duration) *Service 
 }
 
 // Credentials représente les identifiants d'un utilisateur
-type Credentials struct {
-	Email    string `json:"email"`
-	Password string `json:"password"`
-}
+// Importé depuis service_improved.go
 
-// TokenResponse représente la réponse avec le token JWT
-type TokenResponse struct {
-	Token     string    `json:"token"`
-	ExpiresAt time.Time `json:"expires_at"`
-}
+// TokenResponse est importé depuis service_improved.go
 
 // Authenticate vérifie les identifiants d'un utilisateur et génère un token JWT
 func (s *Service) Authenticate(creds *Credentials) (*TokenResponse, error) {

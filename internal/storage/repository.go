@@ -22,12 +22,12 @@ type SecretsCountRepository interface {
 }
 
 // SubscriptionService gère les abonnements et limites
-type SubscriptionService struct {
+type SecretsSubscriptionService struct {
 	repo SecretsCountRepository
 }
 
 // CanCreateSecret vérifie si l'organisation peut créer un nouveau secret
-func (s *SubscriptionService) CanCreateSecret(ctx context.Context, orgID string) (bool, error) {
+func (s *SecretsSubscriptionService) CanCreateSecret(ctx context.Context, orgID string) (bool, error) {
 	count, err := s.repo.GetSecretsCount(ctx, orgID)
 	if err != nil {
 		return false, err

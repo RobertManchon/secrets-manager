@@ -13,7 +13,6 @@ import (
 	"context"
 	"database/sql"
 	"errors"
-	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -158,7 +157,7 @@ func (s *SubscriptionService) GetPlan(ctx context.Context, planID string) (*mode
 	`
 
 	plan := &models.Plan{}
-	var features string // Pour stocker les features JSON
+	// features JSON parsing logic can be added here if needed in the future
 
 	err := s.db.QueryRowContext(ctx, query, planID).Scan(
 		&plan.ID,
@@ -199,7 +198,7 @@ func (s *SubscriptionService) ListAvailablePlans(ctx context.Context) ([]*models
 	var plans []*models.Plan
 	for rows.Next() {
 		plan := &models.Plan{}
-		var features string // Pour stocker les features JSON
+		// features JSON parsing logic can be added here if needed in the future
 
 		err := rows.Scan(
 			&plan.ID,
