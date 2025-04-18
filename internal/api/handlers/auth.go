@@ -38,7 +38,8 @@ func (h *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Authentifier l'utilisateur
-	token, err := h.authService.Authenticate(&creds)
+	ctx := r.Context()
+	token, refreshToken, err := h.authService.Authenticate(ctx, &creds)
 	if err != nil {
 		if err == auth.ErrInvalidCredentials {
 			http.Error(w, "Identifiants invalides", http.StatusUnauthorized)
@@ -47,10 +48,12 @@ func (h *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
-
-	// Répondre avec le token
+	// Répondre avec le token et le refresh token
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(token)
+	json.NewEncoder(w).Encode(map[string]string{
+		"token":         token.Token,
+		"refresh_token": refreshToken.Token, // Assuming `Token` is the correct field for the refresh token
+	})
 }
 
 // Register gère l'inscription d'un utilisateur
@@ -72,7 +75,8 @@ func (h *AuthHandler) Register(w http.ResponseWriter, r *http.Request) {
 		Email:    reg.Email,
 		Password: reg.Password,
 	}
-	err := h.authService.RegisterUser(&creds, reg.FirstName, reg.LastName)
+	ctx := r.Context()
+	_, err := h.authService.RegisterUser(ctx, &creds, reg.FirstName, reg.LastName)
 	if err != nil {
 		if err == auth.ErrUserExists {
 			http.Error(w, "L'utilisateur existe déjà", http.StatusConflict)
@@ -81,6 +85,8 @@ func (h *AuthHandler) Register(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
+
+	// Optionally use the `user` object if needed
 
 	// Répondre avec succès
 	w.WriteHeader(http.StatusCreated)

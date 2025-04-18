@@ -48,7 +48,9 @@ func (h *SecretsHandler) GetSecret(w http.ResponseWriter, r *http.Request) {
 	// TODO: journaliser l'accès au secret
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(secret)
+	if err := json.NewEncoder(w).Encode(secret); err != nil {
+		http.Error(w, "Erreur lors de l'encodage du secret", http.StatusInternalServerError)
+	}
 }
 
 // CreateSecret crée un nouveau secret
@@ -90,7 +92,9 @@ func (h *SecretsHandler) ListSecrets(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(secrets)
+	if err := json.NewEncoder(w).Encode(secrets); err != nil {
+		http.Error(w, "Erreur lors de l'encodage des secrets", http.StatusInternalServerError)
+	}
 }
 
 // DeleteSecret supprime un secret
